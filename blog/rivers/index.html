@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-US" class="gr__dfsek_github_io">
+<head>
+    <link rel="icon" href="../../resources/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="../../resources/favicon.ico" type="image/x-icon"/>
+    <script src="../../resources/jquery.js"></script>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <title>Noise Rivers | dfsek</title>
+
+    <link rel="stylesheet" href="../../resources/style.css">
+</head>
+<body onload="closeNav()">
+<div id="nav" class="sidenavopen">
+    <h2 onclick="openNav()">
+        <div style="text-align: center;">
+            <a href="#">|||</a>
+        </div>
+    </h2>
+</div>
+<div id="navBarContainer"></div>
+<script src="../../resources/navBar.js" type="text/javascript"></script>
+
+<div id="main" onclick="closeNav();">
+    <section class="main-content">
+        <h1 id="welcome-to-dfseks-website">Procedurally Generated Rivers Using OpenSimplex Noise</h1>
+        <p>
+            Procedurally generating rivers, especially purely with noise functions, is notoriously
+            difficult. Consider this commonly seen naive approach:
+        </p>
+        <pre><code class="javascript">if(|simplex(x, z)| > 0.2, 0, 1)</code></pre>
+        <img src="naive.png" alt="Naive solution to noise rivers."/>
+        <sub>In this case, <code>simplex</code> is a 1-octave OpenSimplex2 noise function, domain-warped with another
+            1-octave OpenSimplex2 noise function with twice the frequency.</sub>
+        <br>
+        <p>
+            At first glance, this looks pretty good. However, there are several problems to this approach.
+            First, look at places where "forks" in the river form. The river becomes <i>incredibly</i> wide
+            in these areas, which is undesirable. The river also has inconsistent width in general. In some places it
+            is very wide, in others it pinches into very small areas.
+        </p>
+        <p>
+            Ideally, we could procedurally generate lines with a constant width, to allow finer control over how
+            wide the rivers are.
+        </p>
+        <h2>Procedurally generating constant-width lines</h2>
+        <p>
+            A simple way to generate constant-width lines from an arbitrary input function is to posterize it and
+            apply an edge-detection kernel. A simple edge-detection kernel I have found to work well is:
+        </p>
+        <pre><code class="yaml">[
+[-1, -1, -1],
+[-1,  8, -1],
+[-1, -1, -1]
+]</code></pre>
+        <p>
+            To get a useful result from our Simplex function, first we posterize it to 2 values:
+        </p>
+        <pre><code class="javascript">if(simplex(x, z) > 0, -1, 1)</code></pre>
+        <img src="posterized.png" alt="Posterized noise function">
+        <p>
+            Then, we apply the kernel to it:
+        </p>
+        <pre><code class="javascript">kernel(if(simplex(x, z) > 0, -1, 1), 1)</code></pre>
+        <img src="kerneled.png" alt="Posterized noise function with kernel applied">
+        <sub><code>kernel</code> is simply a function that accepts a function to have the edge-detection kernel
+            applied, and the step at which to sample values for the kernel. E.G. 1 = sample every pixel, 4 =
+            sample every 4 pixels.</sub><br>
+        <p>
+            This gives us lines that are exactly 1 pixel wide in all locations. To get smooth lines of any width,
+            we simply sample the kernel at larger intervals.
+        </p>
+        <pre><code class="javascript">kernel(if(simplex(x, z) > 0, -1, 1), 4)</code></pre>
+        <img src="kerneled_scaled.png" alt="Posterized, scaled noise function with kernel applied">
+        <p>
+            Finally, we posterize again, and we have our result:
+        </p>
+        <pre><code class="javascript">if(kernel(if(simplex(x, z) > 0, -1, 1), 4) > 0, 1, -1)</code></pre>
+        <img src="kerneled_scaled_posterized.png" alt="Posterized, scaled noise function with kernel applied, then posterized again">
+        <p>
+            This completed function can easily be inserted into a biome generation system to create good-looking
+            fully procedural noise-based rivers. If slight width variations are desired, a simple domain warp can
+            be applied to the function. This approach to generating rivers is very fast, and produces visually
+            appealing results.
+        </p>
+    </section>
+</div>
+</body>
+</html>
+

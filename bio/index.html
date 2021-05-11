@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../../resources/favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../../resources/favicon.ico" type="image/x-icon"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
+<script src="../../resources/jquery.js"></script>
+<script src="../../resources/three/three.js"></script>
+<script src="../../resources/three/libs/dat.gui.min.js"></script>
+<script src="../../resources/three/controls/OrbitControls.js"></script>
+<script src="../../resources/three/ParametricGeometries.js"></script>
+<script src="../../resources/three/geometry.js"></script>
+<link rel="stylesheet" href="../../resources/SyntaxHighlight/styles/default.css">
+<script src="../../resources/SyntaxHighlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<title>Hunt the Wumpus 3 | dfsek</title>
+<link rel="stylesheet" href="../../resources/style.css">
+<script src="../../resources/navBar.js" type="text/javascript"></script>
+</head>
+<body onload="closeNav()">
+<div id="nav" class="sidenavopen">
+	<h2 onclick="openNav()">
+		<center>
+			<a href="#">|||</a>
+		</center>
+	</h2>
+</div>
+<div id="navBarContainer"></div>
+<script src="../../resources/navBar.js" type="text/javascript"></script>
+<div id="main" onclick="closeNav();">
+	<section class="main-content">
+		<h1 id="welcome-to-dfseks-website">Hunt the Wumpus<sup>3</sup></h1>
+		<div id="game" style="border:solid gray 2px; height: 404px;">
+			<div style="border-right:solid gray 2px; width:402px; height: 400px;" id="openGL"></div>
+			<input type="button" value="Reset Rotation" onclick="group.rotation.x = 0; group.rotation.y = 0; group.rotation.z = Math.PI/10;"/>
+		</div>
+	</section>
+</div>
+</body>
+
+</html>

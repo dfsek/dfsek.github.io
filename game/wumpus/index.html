@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" href="../../resources/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="../../resources/favicon.ico" type="image/x-icon" />
+  <script src="../../resources/three/tween.js"></script>
+  <script src="../../resources/jquery.js"></script>
+  <script src="../../resources/three/three.js"></script>
+  <script src="../../resources/three/libs/dat.gui.min.js"></script>
+  <script src="../../resources/three/controls/OrbitControls.js"></script>
+  <script src="../../resources/three/ParametricGeometries.js"></script>
+  <script src="../../resources/three/geometry.js"></script>
+  <link rel="stylesheet" href="../../resources/SyntaxHighlight/styles/default.css">
+  <link rel="stylesheet" href="./style.css">
+  <script src="../../resources/SyntaxHighlight/highlight.pack.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <title>Hunt the Wumpus 3 | dfsek</title>
+  <link rel="stylesheet" href="../../../resources/style.css">
+  <script src="../../resources/navBar.js" type="text/javascript"></script>
+</head>
+
+<body onload="closeNav()">
+  <div id="nav" class="sidenavopen">
+    <h2 onclick="openNav()">
+      <center>
+        <a href="#">|||</a>
+      </center>
+    </h2>
+  </div>
+  <div id="navBarContainer"></div>
+  <div id="main" onclick="closeNav();">
+    <section class="main-content">
+      <h1 id="welcome-to-dfseks-website">Hunt the Wumpus<sup>3</sup></h1>
+      <div id="game" style="border:solid gray 2px; height: 404px;">
+        <div id="commands" style="height:376px; margin-left:402px;">r/red: go to nearest red vertex<br />g/green: go to nearest green vertex<br />b/blue: go to nearest blue vertex<br />s/shoot [r/g/b]: shoot at the nearest red/green/blue room<br />a/arrow/arrows:
+          check how
+          many arrows you have left.<br /><br />the goal is to track down the Wumpus and kill it.<br /><br /></div>
+        <form id="gameInput" autocomplete="off" style="margin-top:0px; margin-left:402px; "><input type="text" pattern=".{1,16}" required id="command" style="width:calc(100% - 75px);" /><input autocomplete="false" name="hidden" type="text" style="display:none;"><input
+            type="submit" style="width:75px;" value="Submit" id="sub" /> </form>
+        <div style="border-right:solid gray 2px; width:402px; margin-top:-400px; height: 400px;" id="openGL">
+        </div>
+      </div>
+      <b>
+        <h3>v0.9.4.2 <sub><a href="./changelog">Changelog</a></sub></h3>
+        <br />
+
+      </b>
+      <h1>How to Play</h1>
+      <p>Hunt the Wumpus is actually a very simple game. There are 3 types of hazards, placed randomly on the map.
+        <ul>
+          <li>Super-Bats will pick you up and fly to a random room if you enter the room they are in. They <b>can</b> fly you to rooms containing hazards! You will hear flapping if you enter a room bordering the bats. There are 2 rooms containing
+            bats. If you enter a room with both Super-Bats and a Bottomless Pit, the bats will pick you up out of the Bottomless Pit before you fall too far down.</li>
+          <li>The Bottomless Pit will kill you if you enter the room it is in. You will feel a breeze if you enter a room bordering a Bottomless Pit. There are 2 rooms containing Bottomless Pits.</li>
+          <li>The Wumpus is a fearsome monster that you are trying to kill. It will eat you if you enter the room it is in, so you must shoot it with one of your five Crooked Arrows. If you enter a room bordering the Wumpus, you will smell it. The
+            Wumpus is very lazy, and will usually not move. However, if you shoot an arrow that misses the Wumpus, it might move to one of the rooms bordering the one it is in, which means it could move to your room and eat you! The Wumpus is too
+            big to be lifted by Super-Bats, and it is covered in slime, so it cannot fall down the Bottomless Pit.</li>
+        </ul>
+        While exploring, you may find an arrow dropped by a previous hunter.<br /><br />The game is played by entering the following commands into the CLI on the right.
+        <br />
+        <ul>
+          <li><code>red</code> - Walk to the room highlighted red. Aliases: <code>r</code></li>
+          <li><code>green</code> - Walk to the room highlighted green. Aliases: <code>g</code></li>
+          <li><code>blue</code> - Walk to the room highlighted blue. Aliases: <code>b</code></li>
+          <li><code>a</code> - Count how many Crooked Arrows you have. Aliases: <code>arrow</code> <code>arrows</code></li>
+          <li><code>shoot</code> - Shoot a Crooked Arrow at a room. Valid arguments are <code>red</code>, <code>r</code>, <code>green</code>, <code>g</code>, <code>blue</code>, and <code>b</code>. Aliases: <code>s</code></li>
+        </ul>
+
+      </p>
+      <h1>What is the Wumpus?</h1>
+      <p>The Wumpus is from the hide-and-seek game "Hunt the Wumpus" made by by Gregory Yob in 1973. The game featured a series of caves, arranged like the vertices of a dodecahedron. A Wumpus was generated in a random room, and the player was
+        supposed to locate
+        the Wumpus
+        and shoot it with a "crooked arrow". Later, more hazards were added to the game: 2 rooms with "bottomless pits" that would kill the player if they went into the room containing it, and the 2 rooms with "super-bats" that would pick the
+        player up and place them in a random room, even ones containing hazards. To locate the Wumpus, the player would smell it if they entered a room bordering the room containing the Wumpus. If the player entered a room bordering the bats,
+        they
+        would hear flapping, and if they entered a room bordering a bottomless pit, they would feel a breeze. The game was a huge success, and was featured in <i>Creative Computing</i> in 1975.</p>
+    </section>
+  </div>
+</body>
+<script src="./wumpus.js"></script>
+
+</html>
